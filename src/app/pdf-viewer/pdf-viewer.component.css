@@ -1,0 +1,39 @@
+.page {
+    display: flex;
+}
+
+.searchPart {
+    float: block;
+    width: 40%;
+    border-right: solid;
+}
+
+.searchHeader {
+    display: block;
+    border-bottom: solid;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    margin: 0 auto;
+}
+
+.searchResults {
+    display: block;
+    margin: 1em, 2em;
+    max-height: 1000px;
+    overflow: scroll;
+}
+
+.searchResult {
+    display: block;
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: whitesmoke;
+    font-family: sans-serif;
+    padding: 0.5em;
+    margin: 1em;
+}
+
+.pdfPart {
+    float: right;
+    width: 60%;
+}

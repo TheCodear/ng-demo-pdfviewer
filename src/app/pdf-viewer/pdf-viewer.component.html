@@ -1,1 +1,24 @@
-<pdf-viewer [src]="doc2" [render-text]="true" style="display: block;"></pdf-viewer>
+<div class="page">
+<div class="searchPart">
+
+    <div class="searchHeader">
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()" style="display: block; margin: 0 2em;"> 
+                <input id="searchTerm" type="text" formControlName="searchTerm" style="width: 80%;">
+                <button class="button" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="searchResults">
+        <div class="searchResult" *ngFor="let result of results | async" (click)="showPdf(result.id)">
+                Resultat aus <b>{{ result.version }}</b> auf Seite <b>{{ result.page_nr }}</b> <br><br>
+                ...<span [innerHtml]="result.hit"></span>...
+        </div>
+    </div>
+
+
+</div>
+
+<div class="pdfPart">
+    <pdf-viewer [src]="currPage" [render-text]="true" style="display: block;"></pdf-viewer>
+</div>
+</div>
