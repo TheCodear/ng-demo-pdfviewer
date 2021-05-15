@@ -29,13 +29,14 @@ export class PdfViewerComponent implements OnInit {
 
   showPdf(id: number): void {
     this.searchService.getBase64Page(id).subscribe(res => {
-      this.createPageObj(res)
+      this.createPageObj(res.page)
     }, err => {
       this.createPageObj()
     });
   }
 
   createPageObj(base64?: string): any {
+    console.log(base64)
     const block = base64 == null ? this.searchService.getDefaultBase64() :  base64;
     this.currPage = {
       data: atob(block)

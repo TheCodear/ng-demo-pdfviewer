@@ -23,9 +23,9 @@ export class PdfViewerService {
     return this.httpClient.get<[SearchResult]>(searchUrl);
   }
 
-  public getBase64Page(id: number): Observable<string> {
-    const searchUrl = this.baseUrl + '...' + id;
-    return this.httpClient.get<string>(searchUrl);
+  public getBase64Page(id: number): Observable<any> {
+    const searchUrl = this.baseUrl + 'entry?id=' + id;
+    return this.httpClient.get(searchUrl);
   }
 
   public getDefaultBase64(): string {
