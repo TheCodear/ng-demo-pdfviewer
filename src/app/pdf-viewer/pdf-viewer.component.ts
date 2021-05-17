@@ -1,16 +1,18 @@
 import { PdfViewerService, SearchResult } from './../pdf-viewer.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'app-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
   styleUrls: ['./pdf-viewer.component.css']
 })
-export class PdfViewerComponent implements OnInit {
+export class PdfComponent implements OnInit {
 
   currPage: any;
+  @ViewChild('pdfViewer') private pdfViewer!: PdfViewerComponent;
 
   results: Observable<[SearchResult]> | undefined;
   searchForm = this.formBuilder.group({
@@ -41,6 +43,16 @@ export class PdfViewerComponent implements OnInit {
     this.currPage = {
       data: atob(block)
     }
+  }
+
+  search(stringToSearch: string): any {
+    this.pdfViewer.pdfFindController.executeCommand('find', {
+      caseSensitive: false, findPrevious: undefined, highlightAll: true, phraseSearch: true, query: stringToSearch
+    });
+  }
+
+  pageRendered(e: CustomEvent) {
+    this.search(this.searchForm.value.searchTerm);
   }
 
     

@@ -18,7 +18,7 @@
 
 </div>
 
-<div class="pdfPart">
-    <pdf-viewer [src]="currPage" [render-text]="true" style="display: block;"></pdf-viewer>
+<div class="pdfPart" (click)="search('Streptokokken')">
+    <pdf-viewer #pdfViewer [src]="currPage" [render-text]="true" style="display: block;" (page-rendered)="pageRendered($event)"></pdf-viewer>
 </div>
 </div>
