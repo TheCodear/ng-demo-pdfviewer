@@ -2,7 +2,7 @@
 <div class="searchPart">
 
     <div class="searchHeader">
-        <form [formGroup]="searchForm" (ngSubmit)="onSearch()" style="display: block; margin: 0 2em;"> 
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()" style="display: flex; align-items: center; flex-flow: row wrap; margin: 0 2em;">
                 <input id="searchTerm" type="text" formControlName="searchTerm" style="width: 80%;">
                 <button class="button" type="submit">Search</button>
         </form>
@@ -18,7 +18,11 @@
 
 </div>
 
-<div class="pdfPart" (click)="search('Streptokokken')">
-    <pdf-viewer #pdfViewer [src]="currPage" [render-text]="true" style="display: block;" (page-rendered)="pageRendered($event)"></pdf-viewer>
+<div class="pdfPart">
+    <button (click)="rotatePage()">rotation</button>
+    <button (click)="lastPage()"><</button>
+    <button (click)="nextPage()">></button>
+    <pdf-viewer #pdfViewer [src]="currPage" [render-text]="true" [rotation]="rotation" style="display: block;" (text-layer-rendered)="pageRendered($event)"></pdf-viewer>
 </div>
+
 </div>

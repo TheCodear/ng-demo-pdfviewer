@@ -12,6 +12,9 @@ import { PdfViewerComponent } from 'ng2-pdf-viewer';
 export class PdfComponent implements OnInit {
 
   currPage: any;
+  rotation = 0;
+  id: any;
+
   @ViewChild('pdfViewer') private pdfViewer!: PdfViewerComponent;
 
   results: Observable<[SearchResult]> | undefined;
@@ -22,23 +25,24 @@ export class PdfComponent implements OnInit {
   constructor(private searchService: PdfViewerService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-
   }
 
   onSearch(): void {
       this.results = this.searchService.searchMkb(this.searchForm.value.searchTerm);
+      console.log(this.results)
   }
 
   showPdf(id: number): void {
     this.searchService.getBase64Page(id).subscribe(res => {
-      this.createPageObj(res.page)
+      this.createPageObj(res.page);
     }, err => {
       this.createPageObj()
     });
+    this.id = id;
+    this.rotation = 0;
   }
 
   createPageObj(base64?: string): any {
-    console.log(base64)
     const block = base64 == null ? this.searchService.getDefaultBase64() :  base64;
     this.currPage = {
       data: atob(block)
@@ -55,5 +59,24 @@ export class PdfComponent implements OnInit {
     this.search(this.searchForm.value.searchTerm);
   }
 
+ rotatePage() {
+    if(this.currPage) {
+      this.rotation += 90;
+    }
+  }
+
+  nextPage(){
+    if(this.currPage) {
+      this.id = this.id + 1;
+      this.showPdf(this.id);
+    }
+  }
+
+  lastPage(){
+    if(this.currPage) {
+      this.id = this.id - 1;
+      this.showPdf(this.id);
+    }
+  }
     
 }
