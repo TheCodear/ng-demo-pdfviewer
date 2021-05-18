@@ -14,6 +14,7 @@ export class PdfComponent implements OnInit {
   currPage: any;
   rotation = 0;
   id: any;
+  highlight = '';
 
   @ViewChild('pdfViewer') private pdfViewer!: PdfViewerComponent;
 
@@ -29,10 +30,9 @@ export class PdfComponent implements OnInit {
 
   onSearch(): void {
       this.results = this.searchService.searchMkb(this.searchForm.value.searchTerm);
-      console.log(this.results)
   }
 
-  showPdf(id: number): void {
+  showPdf(id: number, highlight: string): void {
     this.searchService.getBase64Page(id).subscribe(res => {
       this.createPageObj(res.page);
     }, err => {
@@ -40,6 +40,7 @@ export class PdfComponent implements OnInit {
     });
     this.id = id;
     this.rotation = 0;
+    this.highlight = highlight;
   }
 
   createPageObj(base64?: string): any {
@@ -56,7 +57,7 @@ export class PdfComponent implements OnInit {
   }
 
   pageRendered(e: CustomEvent) {
-    this.search(this.searchForm.value.searchTerm);
+    this.search(this.highlight);
   }
 
  rotatePage() {
@@ -68,14 +69,14 @@ export class PdfComponent implements OnInit {
   nextPage(){
     if(this.currPage) {
       this.id = this.id + 1;
-      this.showPdf(this.id);
+      this.showPdf(this.id, this.highlight);
     }
   }
 
   lastPage(){
     if(this.currPage) {
       this.id = this.id - 1;
-      this.showPdf(this.id);
+      this.showPdf(this.id, this.highlight);
     }
   }
     

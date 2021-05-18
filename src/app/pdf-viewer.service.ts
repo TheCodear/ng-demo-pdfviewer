@@ -6,7 +6,8 @@ export interface SearchResult {
   id: number,
   hit: string,
   page_nr: number,
-  version: string
+  version: string,
+  highlight: string
 }
 
 @Injectable({

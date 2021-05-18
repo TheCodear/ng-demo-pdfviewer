@@ -9,7 +9,7 @@
     </div>
 
     <div class="searchResults">
-        <div class="searchResult" *ngFor="let result of results | async" (click)="showPdf(result.id)">
+        <div class="searchResult" *ngFor="let result of results | async" (click)="showPdf(result.id, result.highlight)">
                 Resultat aus <b>{{ result.version }}</b> auf Seite <b>{{ result.page_nr + 2}}</b> <br><br>
                 ...<span [innerHtml]="result.hit"></span>...
         </div>
