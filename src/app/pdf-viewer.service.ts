@@ -16,7 +16,7 @@ export interface SearchResult {
 export class PdfViewerService {
 
   // need the MCS Backend running locally
-  private baseUrl = 'http://localhost:3000/de/poc/';
+  private baseUrl = 'http://localhost:3000/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -24,16 +24,16 @@ export class PdfViewerService {
   * Sends a request to the MCS Backend, which will perform the fulltext search of the given search Term.
   * Returns the results as Observable.
   */
-  public searchMkb(searchTerm: string): Observable<[SearchResult]> {
-    const searchUrl = this.baseUrl + 'search?search=' + searchTerm;
+  public searchMkb(searchTerm: string, language: string): Observable<[SearchResult]> {
+    const searchUrl = this.baseUrl + language + '/poc/search?search=' + searchTerm;
     return this.httpClient.get<[SearchResult]>(searchUrl);
   }
 
   /*
   * Gets the base64 text chunk of the page with the given id from the MCS-BE
   */
-  public getBase64Page(id: number): Observable<any> {
-    const searchUrl = this.baseUrl + 'entry?id=' + id;
+  public getBase64Page(id: number, language: string): Observable<any> {
+    const searchUrl = this.baseUrl + language + '/poc/entry?id=' + id;
     return this.httpClient.get(searchUrl);
   }
 

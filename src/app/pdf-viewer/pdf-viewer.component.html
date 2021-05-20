@@ -3,8 +3,14 @@
 
     <div class="searchHeader">
         <form [formGroup]="searchForm" (ngSubmit)="onSearch()" style="display: flex; align-items: center; flex-flow: row wrap; margin: 0 2em;">
-                <input id="searchTerm" type="text" formControlName="searchTerm" style="width: 80%;">
+                <select [formControl]="language">
+                    <option value="de" selected>Deutsch</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                </select>    
+                <input id="searchTerm" type="text" formControlName="searchTerm" style="width: 60%;">
                 <button class="button" type="submit">Search</button>
+                
         </form>
     </div>
 

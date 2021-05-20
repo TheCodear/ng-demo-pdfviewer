@@ -1,6 +1,6 @@
 import { PdfViewerService, SearchResult } from './../pdf-viewer.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 
@@ -30,6 +30,7 @@ export class PdfComponent implements OnInit {
   searchForm = this.formBuilder.group({
     searchTerm: ''
   });
+  language = new FormControl('de');
 
   constructor(private searchService: PdfViewerService, private formBuilder: FormBuilder) { }
 
@@ -40,7 +41,7 @@ export class PdfComponent implements OnInit {
   * Send Search Request to MCS - Backend.
   */
   onSearch(): void {
-      this.results = this.searchService.searchMkb(this.searchForm.value.searchTerm);
+      this.results = this.searchService.searchMkb(this.searchForm.value.searchTerm, this.language.value);
   }
 
   /*
@@ -49,7 +50,7 @@ export class PdfComponent implements OnInit {
   * MCS-BE and caches some relevant propberties.
   */
   showPdf(id: number, highlight: string): void {
-    this.searchService.getBase64Page(id).subscribe(res => {
+    this.searchService.getBase64Page(id, this.language.value).subscribe(res => {
       this.createPageObj(res.page);
     }, err => {
       this.createPageObj()
